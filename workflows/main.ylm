@@ -1,0 +1,25 @@
+name: CI con Notificación Ntfy
+
+on:
+  push:
+    branches:
+      - main # Se ejecuta cuando se suben cambios a la rama 'main'
+
+jobs:
+  build_and_notify:
+    runs-on: ubuntu-latest # Ejecuta el trabajo en una máquina virtual Ubuntu
+
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v4 # Descarga el código del repositorio
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18' # Puedes especificar la versión de Node.js que necesites
+
+      - name: Ejecutar programa JavaScript
+        run: node src/hello.js # Ejecuta tu programa JavaScript
+
+      - name: Enviar notificación a Ntfy
+        run: curl -d "🎉 Despliegue exitoso en main. ¡Hola Mundo ejecutado!" ntfy.sh/devops-itla
